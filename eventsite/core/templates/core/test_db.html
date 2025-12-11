@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{%block title%} Test Database {% endblock %}
+
+{%block content%}
+{% for user in c_users%}
+    <p> {{user.id}} - {{user.first_name}} </p>
+{%endfor%}
+
+{%endblock%}
