@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Event Management System{% endblock %}</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style type="text/tailwindcss">
+        body { font-family: 'Inter', sans-serif;}
+    </style>
+
+    <!-- Block for adding specific CSS links or styles on individual pages -->
+    {% block head_css %}{% endblock %}
+</head>
+
+<body class="min-h-screen bg-gray-50 text-gray-800 flex flex-col">
+
+    <header class="bg-white shadow-md">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+
+            <!-- Logo/Home Link -->
+            <a href="{% url 'home' %}" class="text-2xl font-extrabold text-indigo-600 hover:text-indigo-800 transition duration-150">
+                EventStream
+            </a>
+
+            <div class="hidden md:flex space-x-6">
+                <a href="#" class="text-gray-600 hover:text-indigo-600 transition duration-150">Browse Events</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600 transition duration-150">About</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600 transition duration-150">Contact</a>
+            </div>
+
+            <!-- Auth/Action Buttons -->
+            <div class="space-x-4">
+                {% if user.is_authenticated %}
+                    <a href="#" class="text-sm font-medium text-gray-600 hover:text-indigo-600">
+                        Hello, {{ user.username }}!
+                    </a>
+                    
+                    <form method="post" action="{% url 'logout' %}" class="inline-block">
+                        {% csrf_token %}
+                        <button type="submit"
+                                class="py-2 px-4 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition duration-150">
+                            Logout
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="text-sm font-medium text-indigo-600 hover:text-indigo-800">
+                        Login
+                    </a>
+                    <a href="{% url 'register' %}" class="py-2 px-4 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 transition duration-150">
+                        Register
+                    </a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="bg-gray-200 text-gray-600 py-5 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
+            &copy; 2025 EventStream. Enjoy your time with Awesome Events.
+        </div>
+    </footer>
+
+
+    {% block body_js %}{% endblock %}
+
+</body>
+</html>
