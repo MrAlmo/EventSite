@@ -9,7 +9,7 @@ class Event(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     location = models.CharField(max_length=255)
-    date = models.DateTimeField()
+    date_time = models.DateTimeField()
 
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
@@ -19,7 +19,7 @@ class Event(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    max_attendance = models.IntegerField(default=0, blank=True, null=True)
+    max_attendance = models.IntegerField(default=0, blank=True)
 
     def get_absolute_url(self):
-        return reverse('event-detail', kwargs={'pk': self.pk})
+        return reverse('event_detail', kwargs={'pk': self.pk})

@@ -46,7 +46,7 @@ class EventCreateView(CreateView, LoginRequiredMixin, ModeratorRequiredMixin):
 class EventUpdateView(UpdateView, LoginRequiredMixin, ModeratorRequiredMixin):
     model = Event
     form_class = EventForm
-    template_name = 'events/event_update.html'
+    template_name = 'events/event_form.html'
 
     def test_func(self):
         event = self.get_object()

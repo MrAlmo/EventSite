@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}{{ event.title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-white p-8 rounded-xl shadow-2xl border border-indigo-100">
+        <div class="flex justify-between items-center border-b pb-4 mb-6">
+            <h1 class="text-4xl font-extrabold text-gray-900">{{ event.title }}</h1>
+
+            {% comment %} Check if the current user is the event creator AND a moderator {% endcomment %}
+            {% if user.is_authenticated and user.is_moderator and user == event.creator %}
+            <div class="space-x-3 flex">
+                <a href="{% url 'event_update' event.pk %}"
+                   class="px-4 py-2 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition duration-150">
+                    Edit Event
+                </a>
+                <a href="{% url 'event_delete' event.pk %}"
+                   class="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition duration-150">
+                    Delete Event
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-8 text-lg">
+            <div>
+                <p class="text-gray-500 font-medium">Date & Time:</p>
+                <p class="text-gray-800 font-bold text-xl">{{ event.date_time|date:"F j, Y, P" }}</p>
+            </div>
+            <div>
+                <p class="text-gray-500 font-medium">Location:</p>
+                <p class="text-gray-800 font-bold text-xl">{{ event.location }}</p>
+            </div>
+            <div>
+                <p class="text-gray-500 font-medium">Organizer:</p>
+                <p class="text-gray-800 text-xl">{{ event.creator.username }}</p>
+            </div>
+            <div>
+                <p class="text-gray-500 font-medium">Max Attendees:</p>
+                <p class="text-gray-800 text-xl">
+                    {% if event.max_attendance > 0 %}
+                        {{ event.max_attendance }}
+                    {% else %}
+                        Unlimited
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-3 border-b pb-2">Description</h2>
+            <p class="text-gray-600 whitespace-pre-wrap">{{ event.description }}</p>
+        </div>
+
+        <div class="text-center pt-4 border-t">
+            <button class="px-8 py-3 bg-indigo-600 text-white text-lg font-bold rounded-full shadow-xl hover:bg-indigo-700 transition duration-300 transform hover:scale-105">
+                Register for this Event (Coming Soon)
+            </button>
+        </div>
+    </div>
+
+    <div class="mt-8 text-center">
+        <a href="{% url 'event_list' %}" class="text-indigo-600 hover:text-indigo-800 font-medium">&larr; Back to all events</a>
+    </div>
+</div>
+{% endblock %}
