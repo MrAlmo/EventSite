@@ -6,6 +6,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from registrations.models import Registration
 
 from .models import Event
 from .forms import EventForm
@@ -31,6 +32,15 @@ class EventDetailView(DetailView):
     model = Event
     context_object_name = 'event'
     template_name = 'events/event_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['is_registered'] = Registration.objects.filter(
+                user=self.request.user,
+                event=self.get_object()
+            ).exists()
+        return context
 
 class EventCreateView(CreateView, LoginRequiredMixin, ModeratorRequiredMixin):
     model = Event

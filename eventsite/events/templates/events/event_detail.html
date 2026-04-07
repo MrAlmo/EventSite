@@ -53,11 +53,37 @@
             <p class="text-gray-600 whitespace-pre-wrap">{{ event.description }}</p>
         </div>
 
+        {% if user.is_authenticated %}
+            {% if is_registered %}
+                <form action="{% url 'cancel_registration' event.id %}" class="text-center pt-4 border-t">
+                    <button class="px-8 py-3 bg-red-600 text-white text-lg font-bold rounded-full shadow-xl hover:bg-red-700 transition duration-300 transform hover:scale-105">
+                        Cancel My Registration
+                    </button>
+                </form>
+            {% else %}
+                {% if event.max_attendees > 0 and event.attendees.count >= event.max_attendees %}
+                        <div class="text-center pt-4 border-t">
+                            <button disabled class="px-8 py-3 bg-gray-400 text-white text-lg font-bold rounded-full cursor-not-allowed">
+                                Event is Full
+                            </button>
+                        </div>
+                    {% else %}
+                        <form action="{% url 'register_for_event' event.id %}" class="text-center pt-4 border-t">
+                            <button type="submit" class="px-8 py-3 bg-indigo-600 text-white text-lg font-bold rounded-full shadow-lg hover:bg-indigo-700 transition transform hover:scale-105">
+                                Join This Event
+                            </button>
+                        </form>
+                    {% endif %}
+            {% endif %}
+        {% else %}
         <div class="text-center pt-4 border-t">
-            <button class="px-8 py-3 bg-indigo-600 text-white text-lg font-bold rounded-full shadow-xl hover:bg-indigo-700 transition duration-300 transform hover:scale-105">
-                Register for this Event (Coming Soon)
-            </button>
+            <form action="{% url 'login' %}">
+                <button  class="px-8 py-3 bg-indigo-600 text-white text-lg font-bold rounded-full shadow-xl hover:bg-indigo-700 transition duration-300 transform hover:scale-105">
+                    Register for this Event (Coming Soon)
+                </button>
+            </form>
         </div>
+        {% endif %}
     </div>
 
     <div class="mt-8 text-center">
