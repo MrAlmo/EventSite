@@ -10,6 +10,8 @@ from registrations.models import Registration
 
 from .models import Event
 from .forms import EventForm
+from feedback.forms import FeedbackForm
+
 
 
 def events(request):
@@ -40,6 +42,7 @@ class EventDetailView(DetailView):
                 user=self.request.user,
                 event=self.get_object()
             ).exists()
+            context['feedback_form'] = FeedbackForm()
         return context
 
 class EventCreateView(CreateView, LoginRequiredMixin, ModeratorRequiredMixin):

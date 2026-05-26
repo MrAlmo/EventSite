@@ -79,7 +79,7 @@
         <div class="text-center pt-4 border-t">
             <form action="{% url 'login' %}">
                 <button  class="px-8 py-3 bg-indigo-600 text-white text-lg font-bold rounded-full shadow-xl hover:bg-indigo-700 transition duration-300 transform hover:scale-105">
-                    Register for this Event (Coming Soon)
+                    Register for this Event
                 </button>
             </form>
         </div>
@@ -88,6 +88,31 @@
 
     <div class="mt-8 text-center">
         <a href="{% url 'event_list' %}" class="text-indigo-600 hover:text-indigo-800 font-medium">&larr; Back to all events</a>
+    </div>
+
+    <div class="mt-12 bg-white p-6 rounded-xl shadow-md">
+    <h3 class="text-2xl font-bold mb-6">Participant Feedback</h3>
+
+    {% for fb in event.feedbacks.all %}
+        <div class="border-b border-gray-100 pb-4 mb-4">
+            <p class="font-semibold text-gray-800">{{ fb.user.username }}</p>
+            <p class="text-yellow-500 font-bold">{{ fb.rating }} / 5 stars</p>
+            <p class="text-gray-600 mt-1">{{ fb.comment }}</p>
+        </div>
+    {% empty %}
+        <p class="text-gray-500 italic">No feedback yet. Be the first!</p>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+        <h4 class="text-lg font-bold mt-8 mb-4">Leave a Review</h4>
+        <form action="{% url 'add_feedback' event.id %}" method="POST" class="space-y-4">
+            {% csrf_token %}
+            {{ feedback_form.as_p }}
+            <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                Submit Feedback
+            </button>
+        </form>
+    {% endif %}
     </div>
 </div>
 {% endblock %}
