@@ -85,10 +85,23 @@ WSGI_APPLICATION = 'eventsite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+"""
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'eventstream_db',
+        'USER': 'eventstream_admin',
+        'PASSWORD': '12344321qwe',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

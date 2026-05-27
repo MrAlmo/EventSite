@@ -61,19 +61,19 @@
                     </button>
                 </form>
             {% else %}
-                {% if event.max_attendees > 0 and event.attendees.count >= event.max_attendees %}
-                        <div class="text-center pt-4 border-t">
-                            <button disabled class="px-8 py-3 bg-gray-400 text-white text-lg font-bold rounded-full cursor-not-allowed">
-                                Event is Full
-                            </button>
-                        </div>
-                    {% else %}
-                        <form action="{% url 'register_for_event' event.id %}" class="text-center pt-4 border-t">
-                            <button type="submit" class="px-8 py-3 bg-indigo-600 text-white text-lg font-bold rounded-full shadow-lg hover:bg-indigo-700 transition transform hover:scale-105">
-                                Join This Event
-                            </button>
-                        </form>
-                    {% endif %}
+                {% if event.max_attendance > 0 and event.attendees.count >= event.max_attendance %}
+                    <div class="text-center pt-4 border-t">
+                        <button disabled class="px-8 py-3 bg-gray-400 text-white text-lg font-bold rounded-full cursor-not-allowed">
+                            Event is Full
+                        </button>
+                    </div>
+                {% else %}
+                    <form action="{% url 'register_for_event' event.id %}" class="text-center pt-4 border-t">
+                        <button type="submit" class="px-8 py-3 bg-indigo-600 text-white text-lg font-bold rounded-full shadow-lg hover:bg-indigo-700 transition transform hover:scale-105">
+                            Join This Event
+                        </button>
+                    </form>
+                {% endif %}
             {% endif %}
         {% else %}
         <div class="text-center pt-4 border-t">
