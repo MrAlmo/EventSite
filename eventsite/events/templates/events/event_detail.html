@@ -84,6 +84,14 @@
             </form>
         </div>
         {% endif %}
+        {% if user.is_authenticated and user.is_moderator %}
+            <div class="text-center pt-4">
+                <a href="{% url 'participants' event.pk %}"
+                class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition duration-150">
+                    Info
+                </a>
+            </div>
+        {% endif %}
     </div>
 
     <div class="mt-8 text-center">

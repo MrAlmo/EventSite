@@ -73,3 +73,13 @@ class EventDeleteView(DeleteView, LoginRequiredMixin, ModeratorRequiredMixin):
     def test_func(self):
         event = self.get_object()
         return event.creator == self.request.user and self.request.user.is_moderator
+
+class ParticipantDetailView(DetailView):
+    model = Event
+    context_object_name = 'event'
+    template_name = 'events/event_participants.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['participants'] = self.object.attendees.all()
+        return context
