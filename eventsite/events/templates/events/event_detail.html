@@ -67,6 +67,12 @@
                             Event is Full
                         </button>
                     </div>
+                {% elif event.is_past %}
+                    <div class="text-center pt-4 border-t">
+                        <button disabled class="px-8 py-3 bg-gray-400 text-white text-lg font-bold rounded-full cursor-not-allowed">
+                            Registration is closed
+                        </button>
+                    </div>
                 {% else %}
                     <form action="{% url 'register_for_event' event.id %}" class="text-center pt-4 border-t">
                         <button type="submit" class="px-8 py-3 bg-indigo-600 text-white text-lg font-bold rounded-full shadow-lg hover:bg-indigo-700 transition transform hover:scale-105">
@@ -112,6 +118,7 @@
     {% endfor %}
 
     {% if user.is_authenticated %}
+        {% if is_registered %}
         <h4 class="text-lg font-bold mt-8 mb-4">Leave a Review</h4>
         <form action="{% url 'add_feedback' event.id %}" method="POST" class="space-y-4">
             {% csrf_token %}
@@ -120,6 +127,7 @@
                 Submit Feedback
             </button>
         </form>
+        {% endif %}
     {% endif %}
     </div>
 </div>

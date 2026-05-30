@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
+from django.utils import timezone
 
 
 
@@ -24,3 +25,6 @@ class Event(models.Model):
 
     def get_absolute_url(self):
         return reverse('event_detail', kwargs={'pk': self.pk})
+
+    def is_past(self):
+        return self.date_time < timezone.now()
