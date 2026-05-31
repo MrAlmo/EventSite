@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from events.models import Event
 
 from .forms import FeedbackForm
+from .models import Feedback
 
 
 @login_required
@@ -19,3 +20,16 @@ def add_feedback(request, event_id):
             feedback.save()
             messages.success(request, 'Your feedback has been submitted.')
         return redirect('event_detail', pk=event.id)
+
+@login_required
+def delete_feedback(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    feedback = Feedback.objects.filter(user=request.user, event=event)
+
+    if feedback.exists():
+        feedback.delete()
+        messages.success(request, 'Your feedback has been deleted.')
+
+    else:
+        messages.error(request, 'Can\'t delete your feedback.')
+    return redirect('event_detail', pk=event.id)
