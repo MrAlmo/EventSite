@@ -8,10 +8,15 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from registrations.models import Registration
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Event
 from .forms import EventForm
 from feedback.forms import FeedbackForm
+from rest_framework.views import APIView
+from .serializers import EventSerializer, RegistrationSerializer
+from rest_framework.response import Response
 
 
 
@@ -94,3 +99,20 @@ class ParticipantDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['participants'] = self.object.attendees.all()
         return context
+
+class UpcomingEventsAPI(APIView):
+    def get(self, request):
+        now = timezone.now()
+        events = Event.objects.filter(date_time__gte=now).order_by('date_time')
+        serializer = EventSerializer(events, many=True)
+        return Response(serializer.data)
+
+class MyEventsAPI(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+
+        registrations = request.user.registrations.all()
+        serializer = RegistrationSerializer(registrations, many=True)
+        return Response(serializer.data)

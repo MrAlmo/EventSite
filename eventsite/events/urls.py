@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import UpcomingEventsAPI, MyEventsAPI
 
 urlpatterns = [
     path('e', views.events, name='events'),
@@ -9,4 +10,6 @@ urlpatterns = [
     path('<int:pk>/delete', views.EventDeleteView.as_view(), name='event_delete'),
     path('create/', views.EventCreateView.as_view(), name='event_create'),
     path('<int:pk>/info', views.ParticipantDetailView.as_view(), name='participants'),
+    path('api/upcoming/', UpcomingEventsAPI.as_view(), name='api-upcoming'),
+    path('api/my-events/', MyEventsAPI.as_view(), name='api-my-events')
 ]

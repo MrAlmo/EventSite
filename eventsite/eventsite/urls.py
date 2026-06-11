@@ -8,4 +8,5 @@ urlpatterns = [
     path('events/', include('events.urls')),
     path('events/register/', include('registrations.urls')),
     path('feedback/', include('feedback.urls')),
+    path('api-auth/', include("rest_framework.urls"))
 ]

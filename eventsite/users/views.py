@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView
 from .forms import CustomUserCreationForm, ProfileUpdateForm
 from .models import CustomUser
+from rest_framework.authtoken.models import Token
 
 
 class SignUpView(CreateView):
@@ -20,7 +21,10 @@ class ProfileView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['my_events'] = self.request.user.registrations.all()
+        token, created = Token.objects.get_or_create(user=self.request.user)
+        context['token'] = token.key
         return context
+
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = CustomUser

@@ -20,6 +20,11 @@
             </div>
         </div>
 
+        <div class="grid gap-6 text-center bg-gray-50 p-6 rounded-lg mb-6">
+            <p class="text-sm text-gray-500 uppercase">Your API for telegram</p>
+            <code class="bg-white p-2 rounded block mt-2">{{ token }}</code>
+        </div>
+
         <div class="flex justify-center gap-4">
             <a href="{% url 'profile_update' %}" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
                 Edit Profile
