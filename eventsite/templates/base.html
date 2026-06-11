@@ -11,7 +11,7 @@
         body { font-family: 'Inter', sans-serif;}
     </style>
 
-    <!-- Block for adding specific CSS links or styles on individual pages -->
+
     {% block head_css %}{% endblock %}
 </head>
 
@@ -33,7 +33,7 @@
 
             <div class="space-x-4">
                 {% if user.is_authenticated %}
-                    <a href="#" class="text-sm font-medium text-gray-600 hover:text-indigo-600">
+                    <a href="{% url 'profile' %}" class="text-sm font-medium text-gray-600 hover:text-indigo-600">
                         Hello, {{ user.username }}!
                     </a>
                     

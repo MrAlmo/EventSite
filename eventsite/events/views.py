@@ -2,6 +2,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.template.context_processors import request
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -29,6 +30,16 @@ class EventListView(ListView):
     model = Event
     context_object_name = 'events'
     template_name = 'events/event_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        now = timezone.now()
+
+        context['upcoming_events'] = Event.objects.filter(date_time__gte=now).order_by('date_time')
+
+        context['past_events'] = Event.objects.filter(date_time__lt=now).order_by('-date_time')
+
+        return context
 
 class EventDetailView(DetailView):
     model = Event

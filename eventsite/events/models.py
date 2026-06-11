@@ -28,3 +28,6 @@ class Event(models.Model):
 
     def is_past(self):
         return self.date_time < timezone.now()
+
+    def is_future(self):
+        return self.date_time >= timezone.now()
