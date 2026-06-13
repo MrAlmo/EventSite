@@ -20,7 +20,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['my_events'] = self.request.user.registrations.all()
+        context['my_events'] = self.request.user.registrations.all().order_by('-registered_at')
         token, created = Token.objects.get_or_create(user=self.request.user)
         context['token'] = token.key
         return context
