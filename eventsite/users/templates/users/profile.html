@@ -5,7 +5,7 @@
     <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 mb-8">
         <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Profile Information</h1>
 
-        <div class="grid grid-cols-3 gap-6 text-center bg-gray-50 p-6 rounded-lg mb-6">
+        <div class="grid grid-cols-3 gap-6 text-center bg-gray-50 p-6 rounded-lg mb-4">
             <div>
                 <p class="text-sm text-gray-500 uppercase">First Name</p>
                 <p class="text-lg font-medium text-gray-900">{{ user.first_name|default:"-" }}</p>
@@ -25,6 +25,17 @@
 <!--            <code class="bg-white p-2 rounded block mt-2">{{ token }}</code>-->
 <!--        </div>-->
 
+
+        <div class="grid grid-cols-2 items-center text-center p-4 mb-6 border rounded-xl border-gray-100 bg-gray-50 max-w-[350px] mx-auto">
+            <p class="text-gray-500 text-sm uppercase font-medium">Email notifications:</p>
+            {% if user.subscribed_to_event %}
+            <a href="{% url 'profile_email_notification' %}" class="mx-auto max-w-[120px] bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Turned on</a>
+            {% else %}
+            <a href="{% url 'profile_email_notification' %}" class="mx-auto max-w-[120px] bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Turned off</a>
+            {% endif %}
+        </div>
+
+
         <div class="flex justify-center gap-4">
             <a href="{% url 'profile_update' %}" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
                 Edit Profile
@@ -37,7 +48,7 @@
 
     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">My Events</h2>
 
-    <div class="space-y-4">
+    <div class="space-y-4 max-h-[400px] overflow-y-auto">
         {% for reg in my_events %}
             <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 flex justify-between items-center hover:shadow-md transition">
                 <div>

@@ -5,15 +5,16 @@
 {% block content %}
     <div class="flex justify-between items-center mb-8 border-b border-gray-200 pb-6 flex-col items-center">
         <h1 class="text-center text-2xl font-extrabold text-gray-900">Upcoming Events</h1>
-
     </div>
 
     {% if events %}
-        <div class="gap-2 grid">
-
+        <div class="gap-2 grid overflow-y-auto max-h-[600px] pr-2">
+            {% if not upcoming_events %}
+                <div class="border border-gray-400 rounded-2xl p-4 shadow-sm mb-2 italic ">
+                    <p class="text-center text-gray-600">No upcoming events found</p>
+                </div>
+            {% else %}
             {% for event in upcoming_events %}
-
-
 
                 <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-400 hover:shadow-xl transition-shadow duration-300">
                     <div class="flex justify-between items-start mb-4">
@@ -47,14 +48,20 @@
 
 
             {% endfor %}
+            {% endif %}
 
         </div>
 
-        <div class="flex justify-between items-center mb-8 border-b border-gray-200 pb-6 flex-col items-center p-6">
+        <div class="flex justify-between items-center mb-8 border-b border-gray-200 border-t pb-6 flex-col items-center pt-6 mt-8">
         <h1 class="text-center text-2xl font-extrabold text-gray-900 ">Past Events</h1>
         </div>
 
-        <div class="gap-2 grid">
+        <div class="gap-2 grid overflow-y-auto max-h-[600px] pr-2">
+            {% if not past_events %}
+                <div class="border border-gray-300 rounded-2xl p-4 shadow-sm mb-2 italic ">
+                    <p class="text-center text-gray-600">No past events found</p>
+                </div>
+            {% else %}
             {% for event in past_events %}
 
                 <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-400 hover:shadow-xl transition-shadow duration-300">
@@ -88,6 +95,7 @@
                 </div>
 
             {% endfor %}
+            {% endif %}
         </div>
     {% else %}
         <div class="space-y-6 shadow-2xl p-2 border rounded-xl border-gray-300 flex flex-col items-center">

@@ -1,5 +1,6 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView
 from .forms import CustomUserCreationForm, ProfileUpdateForm
@@ -34,3 +35,17 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self):
         return self.request.user
+
+def profile_email_notification(request):
+
+    if request.user.subscribed_to_event:
+        request.user.subscribed_to_event = False
+        messages.success(request, f"Turned off email notifications.")
+
+    else:
+        request.user.subscribed_to_event = True
+        messages.success(request, f"Turned on email notifications.")
+
+    request.user.save()
+
+    return redirect('profile')

@@ -6,6 +6,8 @@ class CustomUser(AbstractUser):
     email = models.EmailField(null=True)
     first_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20, blank=True)
+    subscribed_to_event = models.BooleanField(default=False)
+
     is_moderator = models.BooleanField(
         default=False,
         help_text='User is moderator or not.'
