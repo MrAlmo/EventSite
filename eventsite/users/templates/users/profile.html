@@ -28,10 +28,17 @@
 
         <div class="grid grid-cols-2 items-center text-center p-4 mb-6 border rounded-xl border-gray-100 bg-gray-50 max-w-[350px] mx-auto">
             <p class="text-gray-500 text-sm uppercase font-medium">Email notifications:</p>
+
             {% if user.subscribed_to_event %}
-            <a href="{% url 'profile_email_notification' %}" class="mx-auto max-w-[120px] bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Turned on</a>
+            <form action="{% url 'profile_email_notification' %}" method="post">
+                {% csrf_token %}
+            <button class="mx-auto max-w-[120px] bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Turned on</button>
+            </form>
             {% else %}
-            <a href="{% url 'profile_email_notification' %}" class="mx-auto max-w-[120px] bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Turned off</a>
+            <form action="{% url 'profile_email_notification' %}" method="post">
+                {% csrf_token %}
+            <button class="mx-auto max-w-[120px] bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Turned off</button>
+            </form>
             {% endif %}
         </div>
 
