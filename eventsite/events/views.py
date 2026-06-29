@@ -26,7 +26,7 @@ def events(request):
 class ModeratorRequiredMixin(UserPassesTestMixin):
 
     def test_func(self):
-        return self.request.user.is_authenticated() and self.request.uset.is_moderator
+        return self.request.user.is_authenticated and self.request.user.is_moderator
 
     def handle_no_permission(self):
         return render(self.request, '403.html', status=403)
@@ -61,7 +61,7 @@ class EventDetailView(DetailView):
             context['feedback_form'] = FeedbackForm()
         return context
 
-class EventCreateView(CreateView, LoginRequiredMixin, ModeratorRequiredMixin):
+class EventCreateView(LoginRequiredMixin, ModeratorRequiredMixin, CreateView ):
     model = Event
     form_class = EventForm
     template_name = 'events/event_form.html'
@@ -72,7 +72,7 @@ class EventCreateView(CreateView, LoginRequiredMixin, ModeratorRequiredMixin):
 
     success_url = reverse_lazy('event_list')
 
-class EventUpdateView(UpdateView, LoginRequiredMixin, ModeratorRequiredMixin):
+class EventUpdateView(LoginRequiredMixin, ModeratorRequiredMixin, UpdateView):
     model = Event
     form_class = EventForm
     template_name = 'events/event_form.html'
@@ -81,7 +81,7 @@ class EventUpdateView(UpdateView, LoginRequiredMixin, ModeratorRequiredMixin):
         event = self.get_object()
         return event.creator == self.request.user and self.request.user.is_moderator
 
-class EventDeleteView(DeleteView, LoginRequiredMixin, ModeratorRequiredMixin):
+class EventDeleteView(LoginRequiredMixin, ModeratorRequiredMixin, DeleteView):
     model = Event
     success_url = reverse_lazy('event_list')
     template_name = 'events/event_delete.html'
@@ -90,7 +90,7 @@ class EventDeleteView(DeleteView, LoginRequiredMixin, ModeratorRequiredMixin):
         event = self.get_object()
         return event.creator == self.request.user and self.request.user.is_moderator
 
-class ParticipantDetailView(DetailView):
+class ParticipantDetailView(LoginRequiredMixin, ModeratorRequiredMixin, DetailView):
     model = Event
     context_object_name = 'event'
     template_name = 'events/event_participants.html'
