@@ -34,7 +34,7 @@ def contact(request):
             email= form.cleaned_data['email']
             name = form.cleaned_data['name']
 
-            send_mail(subject=f'Message from site: {subject}', message=f'From {name} / {email} \n\n {message}',from_email='backford6@gmail.com', recipient_list=['backford6@gmail.com'])
+            send_mail(subject=f'Message from site: {subject}', message=f'From {name} / {email} \n\n {message}',from_email='backford6@gmail.com', recipient_list=['backford6@gmail.com'], fail_silently=True)
             messages.success(request, 'Your message has been sent.')
             return redirect('home')
     else:

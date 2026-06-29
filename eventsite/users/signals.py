@@ -20,4 +20,4 @@ def send_event_notification(sender, instance, created, **kwargs):
             subject = "New Event Notification"
             text = f"✨ Event: {instance.title}\n\n🚩 Location: {instance.location}\n📅 Date/Time: {datetime.fromisoformat(str(instance.date_time)).strftime('%d.%m.%Y %H:%M')}\n💃 Max participants: {max_participants} \n\n🎙️ Description: {instance.description}"
 
-            send_mass_mail([(subject, text, "backford6@gmail.com", emails)], fail_silently=False)
+            send_mass_mail([(subject, text, "backford6@gmail.com", emails)], fail_silently=True)
